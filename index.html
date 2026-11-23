@@ -227,15 +227,15 @@ footer a { color: var(--doux); }
   <section class="cadre offre" id="acheter" aria-label="Acheter la licence">
     <div class="ticket">
       <div class="corps">
-        <span class="numero">Offre de lancement · jusqu'au 31 décembre 2026</span>
-        <h2>La licence à vie à 35 €</h2>
+        <span class="numero" id="offre-titre">Offre de lancement · jusqu'au 31 décembre 2026</span>
+        <h2 id="offre-h2">La licence à vie à 35 €</h2>
         <p>Un seul paiement pour votre association, toutes les fonctions comprises, mises à jour incluses. Pas d'abonnement, pas de frais par adhérent.</p>
         <p>Paiement par carte bancaire, sécurisé par Stripe. Vous recevez votre clé et votre facture par e-mail.</p>
         <p class="mention">TVA non applicable, art. 293 B du CGI : le prix affiché est le prix payé.</p>
       </div>
       <div class="talon">
-        <span class="barre-prix">49 €</span>
-        <span class="prix">35<small> €</small></span>
+        <span class="barre-prix" id="prix-barre">49 €</span>
+        <span class="prix" id="prix-actuel">35<small> €</small></span>
         <button class="bouton fonce" type="button" id="bouton-achat">Acheter maintenant</button>
         <p class="etat-achat" id="etat-achat" role="status"></p>
       </div>
@@ -374,8 +374,8 @@ footer a { color: var(--doux); }
       </div>
       <div class="colonne nous">
         <div class="qui">AssoGestion</div>
-        <div class="montant">35 €</div>
-        <div class="detail">une seule fois, jusqu'au 31 décembre 2026 (ensuite 49 €)</div>
+        <div class="montant" id="calcul-montant">35 €</div>
+        <div class="detail" id="calcul-detail">une seule fois, jusqu'au 31 décembre 2026 (ensuite 49 €)</div>
       </div>
     </div>
   </section>
@@ -501,8 +501,22 @@ footer a { color: var(--doux); }
 
 <script>
 {
-  // Collez ici votre lien de paiement Stripe (Payment Link), par exemple "https://buy.stripe.com/..."
-  const LIEN_STRIPE = "";
+  // Liens de paiement Stripe : offre de lancement (35 €) jusqu'au 31/12/2026, puis tarif normal (49 €)
+  const LIEN_LANCEMENT = "https://buy.stripe.com/14AaEWanD5I57HPfwBaMU00";
+  const LIEN_NORMAL = "https://buy.stripe.com/28E6oGdzPeeB3rzckpaMU01";
+  const FIN_OFFRE = new Date("2027-01-01T00:00:00+01:00");
+  const offreFinie = new Date() >= FIN_OFFRE;
+  const LIEN_STRIPE = offreFinie ? LIEN_NORMAL : LIEN_LANCEMENT;
+
+  if (offreFinie) {
+    const mettre = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+    mettre("offre-titre", "Licence à vie · paiement unique");
+    mettre("offre-h2", "La licence à vie à 49 €");
+    const barre = document.getElementById("prix-barre"); if (barre) barre.style.display = "none";
+    mettre("prix-actuel", "49<small> €</small>");
+    mettre("calcul-montant", "49 €");
+    mettre("calcul-detail", "une seule fois, pour toujours");
+  }
 
   const boutonAchat = document.getElementById("bouton-achat");
   const etatAchat = document.getElementById("etat-achat");
