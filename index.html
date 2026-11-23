@@ -94,6 +94,24 @@ h1 mark { background: linear-gradient(transparent 58%, var(--signal) 58%, var(--
 .barre-prix { text-decoration: line-through; text-decoration-thickness: 2px; opacity: .75; font-weight: 700; }
 .etat-achat { font-size: .92rem; min-height: 1.4em; margin: 0; max-width: 24ch; }
 
+/* Commande par virement ou chèque */
+.choix-autre { background: none; border: 0; padding: 6px 0; color: var(--signal-encre); font: 700 .95rem/1.3 var(--lecture); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 44px; }
+.commande { margin-top: 20px; background: var(--carte); border: 1px solid var(--ligne); border-radius: 14px; padding: clamp(20px, 4vw, 36px); }
+.commande[hidden] { display: none; }
+.commande h3 { font-stretch: 80%; font-weight: 850; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+.commande .aide { color: var(--doux); margin: 8px 0 20px; max-width: 64ch; }
+.formulaire { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 20px; }
+.formulaire .large { grid-column: 1 / -1; }
+.formulaire label { display: grid; gap: 6px; font-weight: 700; color: var(--encre); font-size: .95rem; }
+.formulaire label span { font-weight: 400; color: var(--doux); }
+.formulaire input, .formulaire textarea, .formulaire select { font: 16px/1.4 var(--lecture); padding: 10px 12px; min-height: 44px; border: 1px solid var(--ligne); border-radius: 8px; background: var(--papier); color: var(--texte); width: 100%; }
+.formulaire textarea { min-height: 76px; resize: vertical; }
+.formulaire .actions-commande { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.erreur-commande { color: #b3261e; font-weight: 700; min-height: 1.4em; margin: 0; }
+.apercu { white-space: pre-wrap; background: var(--papier); border: 1px solid var(--ligne); border-radius: 8px; padding: 14px; font-size: .92rem; margin: 0; }
+.apercu[hidden] { display: none; }
+@media (max-width: 600px) { .formulaire { grid-template-columns: minmax(0, 1fr); } }
+
 /* Fonctions */
 .fonctions { display: grid; gap: 72px; padding-block: 24px 72px; }
 .fonction { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 48px; align-items: center; }
@@ -230,15 +248,45 @@ footer a { color: var(--doux); }
         <span class="numero" id="offre-titre">Offre de lancement · jusqu'au 31 décembre 2026</span>
         <h2 id="offre-h2">La licence à vie à 35 €</h2>
         <p>Un seul paiement pour votre association, toutes les fonctions comprises, mises à jour incluses. Pas d'abonnement, pas de frais par adhérent.</p>
-        <p>Paiement par carte bancaire, sécurisé par Stripe, ou par virement et chèque sur demande. Vous recevez votre clé et votre facture par e-mail.</p>
+        <p>Paiement par carte bancaire, sécurisé par Stripe, ou par virement ou chèque. Vous recevez votre clé et votre facture par e-mail.</p>
         <p class="mention">TVA non applicable, art. 293 B du CGI : le prix affiché est le prix payé.</p>
       </div>
       <div class="talon">
         <span class="barre-prix" id="prix-barre">49 €</span>
         <span class="prix" id="prix-actuel">35<small> €</small></span>
-        <button class="bouton fonce" type="button" id="bouton-achat">Acheter maintenant</button>
+        <button class="bouton fonce" type="button" id="bouton-achat">Payer par carte</button>
+        <button class="choix-autre" type="button" id="bouton-virement" aria-controls="commande" aria-expanded="false">Payer par virement ou chèque</button>
         <p class="etat-achat" id="etat-achat" role="status"></p>
       </div>
+    </div>
+
+    <div class="commande" id="commande" hidden>
+      <h3>Commander par virement ou chèque</h3>
+      <p class="aide">Remplissez ces informations : elles servent à fabriquer votre clé et à établir la facture. Un e-mail prêt à envoyer s'ouvre ensuite ; vous recevez en réponse les modalités de paiement (RIB ou adresse d'envoi du chèque), puis votre clé et votre facture dès réception du règlement.</p>
+      <form class="formulaire" id="form-commande" novalidate>
+        <label class="large">Nom exact de l'association * <span>écrit comme dans vos statuts : ce sera le nom de la licence</span>
+          <input id="c-nom" autocomplete="organization" required></label>
+        <label class="large">Adresse complète *
+          <textarea id="c-adresse" autocomplete="street-address" required></textarea></label>
+        <label>Nom du contact *
+          <input id="c-contact" autocomplete="name" required></label>
+        <label>Fonction <span>facultatif</span>
+          <input id="c-fonction" placeholder="ex. : président(e), trésorier(ère)"></label>
+        <label>E-mail *
+          <input id="c-email" type="email" autocomplete="email" required></label>
+        <label>Téléphone <span>facultatif</span>
+          <input id="c-tel" type="tel" autocomplete="tel"></label>
+        <label>N° RNA ou SIRET <span>facultatif</span>
+          <input id="c-rna" placeholder="W571234567 ou n° SIRET"></label>
+        <label>Paiement souhaité *
+          <select id="c-mode"><option>Virement bancaire</option><option>Chèque</option></select></label>
+        <div class="large actions-commande">
+          <button class="bouton plein" type="submit">Préparer l'e-mail</button>
+          <button class="bouton" type="button" id="c-copier">Copier la demande</button>
+        </div>
+        <p class="large erreur-commande" id="c-message" role="status"></p>
+        <pre class="large apercu" id="c-apercu" hidden></pre>
+      </form>
     </div>
   </section>
 
@@ -385,7 +433,7 @@ footer a { color: var(--doux); }
     <ol>
       <li><b>Téléchargez</b>La démo s'ouvre sur une association fictive déjà remplie. Vous pouvez tout essayer : elle revient à zéro à chaque ouverture.</li>
       <li><b>Testez avec vos données</b>La version complète marche 20 jours sans aucune limite. Ensuite, vos données restent consultables.</li>
-      <li><b>Achetez et recevez votre clé</b>Payez par carte sur ce site, ou depuis le bouton « Acheter » du logiciel. Vous recevez votre clé à vie et votre facture par e-mail.</li>
+      <li><b>Achetez et recevez votre clé</b>Payez par carte, par virement ou par chèque, sur ce site ou depuis le bouton « Acheter » du logiciel. Vous recevez votre clé à vie et votre facture par e-mail.</li>
     </ol>
   </section>
 
@@ -395,7 +443,7 @@ footer a { color: var(--doux); }
       <details>
         <summary>Comment se passe le paiement ?</summary>
         <p>Par carte bancaire, sur une page de paiement sécurisée Stripe (Apple Pay et Google Pay acceptés). Indiquez le nom exact de l'association et son adresse : ils figureront sur la facture. Votre clé arrive par e-mail sous 48 heures ouvrées, souvent bien avant.</p>
-        <p>Vous préférez payer par virement ou par chèque ? Dans le logiciel, cliquez sur « Acheter », puis sur « Commander par e-mail », ou écrivez à DH-Logiciels@outlook.fr. Vous recevez les modalités de paiement, puis votre clé et votre facture dès réception du règlement.</p>
+        <p>Vous préférez payer par virement ou par chèque ? Cliquez sur « Payer par virement ou chèque » sous le prix, ou dans le logiciel sur « Acheter » puis « Commander par e-mail ». Vous recevez les modalités de paiement, puis votre clé et votre facture dès réception du règlement.</p>
       </details>
       <details>
         <summary>Pouvez-vous nous faire une facture pour la trésorerie ?</summary>
@@ -478,7 +526,7 @@ footer a { color: var(--doux); }
         <ul>
           <li><b>Produit :</b> licence d'utilisation à vie du logiciel AssoGestion pour une association, sur ses ordinateurs Windows, mises à jour comprises.</li>
           <li><b>Prix :</b> 49 € (35 € jusqu'au 31 décembre 2026), payable en une fois. TVA non applicable, art. 293 B du CGI.</li>
-          <li><b>Paiement :</b> par carte bancaire via Stripe (DH Logiciels n'a jamais accès à vos données de carte), ou par virement ou chèque sur demande par e-mail.</li>
+          <li><b>Paiement :</b> par carte bancaire via Stripe (DH Logiciels n'a jamais accès à vos données de carte), ou par virement ou chèque après commande par e-mail.</li>
           <li><b>Livraison :</b> la clé de licence et la facture sont envoyées par e-mail sous 48 heures ouvrées après le paiement par carte, ou dès réception du virement ou du chèque.</li>
           <li><b>Essai :</b> la version complète peut être essayée gratuitement 20 jours avant tout achat.</li>
           <li><b>Rétractation :</b> la clé étant un contenu numérique fourni après le paiement avec l'accord de l'acheteur, le droit de rétractation ne s'applique pas une fois la clé envoyée (art. L221-28 du Code de la consommation).</li>
@@ -533,6 +581,79 @@ footer a { color: var(--doux); }
       etatAchat.textContent = "La page de paiement s'ouvre dans un nouvel onglet.";
     } else {
       etatAchat.textContent = "Le paiement en ligne arrive très bientôt. En attendant, écrivez à DH-Logiciels@outlook.fr pour commander.";
+    }
+  });
+
+  // ---- Commande par virement ou chèque : même format d'e-mail que le logiciel (lu par AssoGestion Admin) ----
+  const EMAIL = "DH-Logiciels@outlook.fr";
+  const zoneCommande = document.getElementById("commande");
+  const boutonVirement = document.getElementById("bouton-virement");
+  const msgCommande = document.getElementById("c-message");
+  const apercu = document.getElementById("c-apercu");
+  const val = id => document.getElementById(id).value.trim();
+  const prixDetail = () => offreFinie ? "49 €" : "35 € (offre de lancement jusqu'au 31/12/2026, au lieu de 49 €)";
+
+  boutonVirement.addEventListener("click", () => {
+    zoneCommande.hidden = false;
+    boutonVirement.setAttribute("aria-expanded", "true");
+    zoneCommande.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => document.getElementById("c-nom").focus({ preventScroll: true }), 400);
+  });
+
+  function verifier() {
+    const manque = !val("c-nom") ? "le nom exact de l'association"
+      : !val("c-adresse") ? "l'adresse complète"
+      : !val("c-contact") ? "le nom du contact"
+      : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val("c-email")) ? "une adresse e-mail valide" : "";
+    msgCommande.textContent = manque ? "Indiquez " + manque + "." : "";
+    return !manque;
+  }
+  function sujet() { return "Achat licence AssoGestion - " + val("c-nom"); }
+  function corps() {
+    const n = "\n";
+    const adresse = val("c-adresse").split(/\r?\n/).map(l => l.trim()).filter(Boolean).join(", ");
+    const fonction = val("c-fonction");
+    return "Bonjour," + n + n +
+      "Je souhaite acheter la licence à vie d'AssoGestion (" + prixDetail() + ")." + n + n +
+      "=== Informations pour la licence et la facture ===" + n +
+      "Nom exact de l'association : " + val("c-nom") + n +
+      "Adresse : " + adresse + n +
+      "Contact : " + val("c-contact") + (fonction ? " (" + fonction + ")" : "") + n +
+      "E-mail : " + val("c-email") + n +
+      (val("c-tel") ? "Téléphone : " + val("c-tel") + n : "") +
+      (val("c-rna") ? "N° RNA / SIRET : " + val("c-rna") + n : "") +
+      "Paiement souhaité : " + val("c-mode") + n +
+      "Commande passée depuis le site dh-logiciels.com" + n +
+      "==================================================" + n + n +
+      "Merci de m'indiquer les modalités de paiement." + n + n +
+      val("c-contact");
+  }
+  function montrerApercu() {
+    apercu.textContent = "À : " + EMAIL + "\nObjet : " + sujet() + "\n\n" + corps();
+    apercu.hidden = false;
+  }
+
+  document.getElementById("form-commande").addEventListener("submit", e => {
+    e.preventDefault();
+    if (!verifier()) return;
+    const lien = document.createElement("a");
+    lien.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent(sujet()) + "&body=" + encodeURIComponent(corps());
+    document.body.appendChild(lien);
+    lien.click();
+    lien.remove();
+    msgCommande.textContent = "";
+    montrerApercu();
+    msgCommande.textContent = "Votre messagerie devrait s'ouvrir avec l'e-mail prêt à envoyer. Sinon, cliquez sur « Copier la demande » et collez-la dans un e-mail à " + EMAIL + ".";
+  });
+
+  document.getElementById("c-copier").addEventListener("click", async () => {
+    if (!verifier()) return;
+    montrerApercu();
+    try {
+      await navigator.clipboard.writeText(apercu.textContent);
+      msgCommande.textContent = "Demande copiée : collez-la dans un e-mail à " + EMAIL + ".";
+    } catch (err) {
+      msgCommande.textContent = "Copie impossible ici : sélectionnez le texte ci-dessous et envoyez-le à " + EMAIL + ".";
     }
   });
 
