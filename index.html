@@ -3,495 +3,91 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DH Logiciels – AssoGestion</title>
-<meta name="description" content="DH Logiciels, éditeur d'AssoGestion : le logiciel des petites associations. Adhérents, cotisations, trésorerie, buvette, prêts de matériel. Sur votre PC, sans abonnement.">
+<title>DH Logiciels – logiciels et modèles Excel pour associations et petites entreprises</title>
+<meta name="description" content="DH Logiciels, petit éditeur en Moselle : AssoGestion, le logiciel des associations payé une fois ; un planning horaire Excel gratuit ; des fichiers Excel et logiciels sur mesure.">
+<link rel="canonical" href="https://dh-logiciels.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DH Logiciels – logiciels et modèles Excel pour associations et petites entreprises">
+<meta property="og:description" content="DH Logiciels, petit éditeur en Moselle : AssoGestion, le logiciel des associations payé une fois ; un planning horaire Excel gratuit ; des fichiers Excel et logiciels sur mesure.">
+<meta property="og:url" content="https://dh-logiciels.com/">
+<meta property="og:image" content="https://dh-logiciels.com/img/accueil.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-/* VOICE : affiche d'association, directe et chaleureuse, signée par un petit éditeur local.
-   IDEA : l'affiche du comité des fêtes, avec le prix traité comme un ticket de tombola.
-   PICTURE : captures du vrai logiciel dans des fenêtres Windows, en alternance.
-   COLOUR and TYPE : encre bleu ardoise sur papier gris froid, accent jaune ticket ; Archivo condensé + Atkinson Hyperlegible.
-   LAYOUT : site complet de DH Logiciels : en-tête, AssoGestion, achat, sur mesure, contact, mentions légales. */
-:root {
-  --papier: #eef1f4; --carte: #ffffff; --encre: #17324f; --texte: #1c2733; --doux: #55606d;
-  --ligne: #d3dae2; --signal: #ffd23f; --signal-encre: #3a2c00; --ok: #2e7d32;
-  --affiche: "Archivo", "Arial Narrow", "Roboto Condensed", sans-serif;
-  --lecture: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
-  --rayon: 10px;
-  --ombre: 0 1px 2px rgba(23, 50, 79, .08), 0 12px 32px -12px rgba(23, 50, 79, .28);
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --papier: #0f1822; --carte: #16222f; --encre: #e8eef5; --texte: #dde4ec; --doux: #9aa7b5;
-    --ligne: #2a3a4b; --signal: #ffd23f; --signal-encre: #2a2000; --ok: #66bb6a;
-    --ombre: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -14px rgba(0, 0, 0, .7); color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --papier: #0f1822; --carte: #16222f; --encre: #e8eef5; --texte: #dde4ec; --doux: #9aa7b5;
-  --ligne: #2a3a4b; --signal: #ffd23f; --signal-encre: #2a2000; --ok: #66bb6a;
-  --ombre: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -14px rgba(0, 0, 0, .7); color-scheme: dark;
-}
-* { box-sizing: border-box; min-width: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
-body { margin: 0; background: var(--papier); color: var(--texte); font-family: var(--lecture); font-size: 1.0625rem; line-height: 1.55; overflow-x: clip; }
-img { max-width: 100%; height: auto; display: block; }
-a { color: inherit; }
-:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
-.cadre { width: min(1180px, 100% - 32px); margin-inline: auto; }
-
-/* En-tête */
-.entete { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; flex-wrap: wrap; }
-.marque { font-family: var(--affiche); font-stretch: 80%; font-weight: 800; font-size: 1.5rem; letter-spacing: -.01em; color: var(--encre); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.marque svg { flex: none; }
-.entete nav { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.entete nav .lien { text-decoration: none; font-weight: 700; color: var(--encre); padding: 10px 8px; }
-.entete nav .lien:hover { text-decoration: underline; }
-
-.bouton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 700 1rem/1 var(--lecture); padding: 14px 20px; min-height: 44px; border-radius: 8px; text-decoration: none; border: 2px solid var(--encre); color: var(--encre); background: transparent; transition: transform .15s ease; cursor: pointer; }
-.bouton:hover { transform: translateY(-1px); }
-.bouton.plein { background: var(--encre); color: var(--papier); }
-.bouton.jaune { background: var(--signal); border-color: var(--signal); color: var(--signal-encre); }
-.bouton.fonce { background: var(--signal-encre); border-color: var(--signal-encre); color: var(--signal); }
-.bouton.petit { padding: 10px 14px; font-size: .95rem; }
-
-/* Ouverture */
-.ouverture { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; align-items: center; padding-block: 32px 56px; }
-.surtitre { font-family: var(--affiche); font-stretch: 85%; font-weight: 700; font-size: .95rem; color: var(--doux); margin: 0 0 14px; }
-h1, h2, h3 { font-family: var(--affiche); color: var(--encre); text-wrap: balance; margin: 0; }
-h1 { font-stretch: 75%; font-weight: 900; line-height: .95; letter-spacing: -.015em; font-size: clamp(2.6rem, 6.2vw, 4.9rem); }
-h1 mark { background: linear-gradient(transparent 58%, var(--signal) 58%, var(--signal) 92%, transparent 92%); color: inherit; padding-inline: .04em; }
-.chapeau { font-size: 1.2rem; max-width: 34ch; margin: 22px 0 28px; }
-.actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.garanties { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 22px 0 0; padding: 0; list-style: none; color: var(--doux); font-size: .95rem; }
-.garanties li { display: flex; align-items: center; gap: 8px; }
-.garanties li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
-.vitrine { position: relative; padding-bottom: 12%; }
-.fenetre { background: var(--carte); border-radius: var(--rayon); box-shadow: var(--ombre); border: 1px solid var(--ligne); overflow: hidden; margin: 0; }
-.fenetre .barre { height: 30px; display: flex; align-items: center; gap: 6px; padding-inline: 12px; background: #1f4e79; color: #fff; font-size: .78rem; font-weight: 700; }
-.fenetre .barre i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.35); }
-.fenetre .barre span { margin-left: 6px; opacity: .9; }
-.vitrine .principale { width: 86%; }
-.vitrine .secondaire { position: absolute; right: 0; bottom: 0; width: 62%; animation: glisse .9s cubic-bezier(.2, .7, .2, 1) .2s both; }
-@keyframes glisse { from { transform: translate(18px, 18px); } to { transform: none; } }
-
-/* Ticket d'achat */
-.offre { padding-block: 8px 64px; }
-.ticket { --trou: 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; background: var(--signal); color: var(--signal-encre); border-radius: 14px;
-  -webkit-mask: radial-gradient(circle var(--trou) at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle var(--trou) at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
-  mask: radial-gradient(circle var(--trou) at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle var(--trou) at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat; }
-.ticket .corps { padding: 28px 36px 28px 44px; display: grid; gap: 8px; }
-.ticket .talon { padding: 28px 44px 28px 36px; border-left: 3px dashed rgba(58, 44, 0, .45); display: grid; align-content: center; justify-items: center; text-align: center; gap: 6px; }
-.ticket .numero { font-family: var(--affiche); font-stretch: 80%; font-weight: 700; font-size: .9rem; }
-.ticket h2 { color: var(--signal-encre); font-stretch: 78%; font-weight: 900; font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1; }
-.ticket p { margin: 0; max-width: 54ch; }
-.ticket .mention { font-size: .9rem; opacity: .85; }
-.prix { font-family: var(--affiche); font-stretch: 75%; font-weight: 900; line-height: .9; font-size: clamp(3.6rem, 8vw, 5.6rem); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.prix small { font-size: .45em; }
-.barre-prix { text-decoration: line-through; text-decoration-thickness: 2px; opacity: .75; font-weight: 700; }
-.etat-achat { font-size: .92rem; min-height: 1.4em; margin: 0; max-width: 24ch; }
-
-/* Commande par virement ou chèque */
-.choix-autre { background: none; border: 0; padding: 6px 0; color: var(--signal-encre); font: 700 .95rem/1.3 var(--lecture); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 44px; }
-.commande { margin-top: 20px; background: var(--carte); border: 1px solid var(--ligne); border-radius: 14px; padding: clamp(20px, 4vw, 36px); }
-.commande[hidden] { display: none; }
-.commande h3 { font-stretch: 80%; font-weight: 850; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
-.commande .aide { color: var(--doux); margin: 8px 0 20px; max-width: 64ch; }
-.formulaire { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 20px; }
-.formulaire .large { grid-column: 1 / -1; }
-.formulaire label { display: grid; gap: 6px; font-weight: 700; color: var(--encre); font-size: .95rem; }
-.formulaire label span { font-weight: 400; color: var(--doux); }
-.formulaire input, .formulaire textarea, .formulaire select { font: 16px/1.4 var(--lecture); padding: 10px 12px; min-height: 44px; border: 1px solid var(--ligne); border-radius: 8px; background: var(--papier); color: var(--texte); width: 100%; }
-.formulaire textarea { min-height: 76px; resize: vertical; }
-.formulaire .actions-commande { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.erreur-commande { color: #b3261e; font-weight: 700; min-height: 1.4em; margin: 0; }
-.apercu { white-space: pre-wrap; background: var(--papier); border: 1px solid var(--ligne); border-radius: 8px; padding: 14px; font-size: .92rem; margin: 0; }
-.apercu[hidden] { display: none; }
-@media (max-width: 600px) { .formulaire { grid-template-columns: minmax(0, 1fr); } }
-
-/* Fonctions */
-.fonctions { display: grid; gap: 72px; padding-block: 24px 72px; }
-.fonction { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 48px; align-items: center; }
-.fonction:nth-child(even) { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); }
-.fonction:nth-child(even) .texte { order: 2; }
-.texte .etiquette { display: inline-block; font-family: var(--affiche); font-stretch: 85%; font-weight: 700; font-size: .95rem; color: var(--doux); margin-bottom: 10px; }
-.texte h2, .section-titre { font-stretch: 78%; font-weight: 850; font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1.02; }
-.texte p { margin: 14px 0 0; max-width: 46ch; }
-.texte ul, .puces { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-.texte li, .puces li { padding-left: 22px; position: relative; }
-.texte li::before, .puces li::before { content: ""; position: absolute; left: 0; top: .62em; width: 12px; height: 3px; background: var(--signal); border-radius: 2px; }
-.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
-
-.bloc { padding-block: 64px; border-top: 1px solid var(--ligne); }
-.intro { color: var(--doux); margin: 10px 0 28px; max-width: 60ch; }
-.modules { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1px; background: var(--ligne); border: 1px solid var(--ligne); border-radius: var(--rayon); overflow: hidden; }
-.module { background: var(--carte); padding: 18px 20px; display: grid; gap: 4px; }
-.module b { font-family: var(--affiche); font-stretch: 85%; font-size: 1.15rem; color: var(--encre); }
-.module span { color: var(--doux); font-size: .95rem; line-height: 1.4; }
-
-.calcul { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
-.calcul p { max-width: 48ch; }
-.colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-self: center; }
-.colonne { background: var(--carte); border: 1px solid var(--ligne); border-radius: var(--rayon); padding: 20px; }
-.colonne.nous { border: 2px solid var(--encre); }
-.colonne .qui { font-weight: 700; color: var(--doux); font-size: .9rem; }
-.colonne .montant { font-family: var(--affiche); font-stretch: 78%; font-weight: 900; font-size: 2.6rem; color: var(--encre); line-height: 1.05; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.colonne .detail { font-size: .92rem; color: var(--doux); }
-
-.etapes ol { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: etape; }
-.etapes li { counter-increment: etape; background: var(--carte); border: 1px solid var(--ligne); border-radius: var(--rayon); padding: 22px; }
-.etapes li::before { content: counter(etape); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--encre); color: var(--papier); font-family: var(--affiche); font-weight: 900; font-size: 1.25rem; margin-bottom: 12px; }
-.etapes li b { display: block; font-size: 1.1rem; color: var(--encre); margin-bottom: 4px; }
-
-.deux { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 48px; }
-details { border-bottom: 1px solid var(--ligne); padding-block: 16px; }
-details:first-of-type { border-top: 1px solid var(--ligne); }
-summary { cursor: pointer; font-weight: 700; color: var(--encre); list-style: none; display: flex; justify-content: space-between; gap: 16px; min-height: 28px; }
-summary::-webkit-details-marker { display: none; }
-summary::after { content: "+"; font-family: var(--affiche); font-size: 1.4rem; line-height: 1; transition: transform .2s ease; }
-details[open] summary::after { transform: rotate(45deg); }
-details p, details li { max-width: 66ch; }
-details p { margin: 10px 0 0; }
-details ul { margin: 10px 0 0; padding-left: 20px; }
-.a-completer { background: var(--signal); color: var(--signal-encre); padding: 0 .3em; border-radius: 3px; font-weight: 700; }
-
-/* Sur mesure */
-.mesure { background: var(--carte); border: 1px solid var(--ligne); border-radius: 16px; padding: clamp(24px, 4vw, 44px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
-.mesure p { max-width: 52ch; }
-
-/* Contact */
-.contact .boite { background: var(--encre); color: var(--papier); border-radius: 16px; padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
-.contact h2 { color: var(--papier); }
-.contact p { margin: 12px 0 0; max-width: 52ch; opacity: .9; }
-.adresse { font-family: var(--affiche); font-stretch: 85%; font-weight: 700; font-size: clamp(1.2rem, 2.4vw, 1.6rem); overflow-wrap: anywhere; }
-.contact .liens { display: grid; gap: 10px; justify-items: start; }
-.contact .bouton { border-color: var(--papier); color: var(--papier); }
-.contact .bouton.jaune { color: var(--signal-encre); border-color: var(--signal); }
-.copie { font-size: .9rem; min-height: 1.4em; opacity: .85; }
-.aide-install { font-size: .95em; margin-top: 18px; max-width: 46ch; opacity: .9; }
-.sur-mobile { display: none; font-size: .95em; margin-top: 14px; }
-@media (pointer: coarse) and (max-width: 860px) { .sur-mobile { display: block; } }
-
-footer { padding-block: 24px 40px; color: var(--doux); font-size: .9rem; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; border-top: 1px solid var(--ligne); }
-footer a { color: var(--doux); }
-
-@media (max-width: 860px) {
-  .ouverture, .fonction, .fonction:nth-child(even), .calcul, .deux, .contact .boite, .mesure { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .fonction:nth-child(even) .texte { order: 0; }
-  .ouverture { padding-top: 8px; }
-  .etapes ol { grid-template-columns: minmax(0, 1fr); }
-  .fonctions { gap: 56px; }
-}
-@media (max-width: 600px) {
-  .entete nav .lien { display: none; }
-  .ticket { grid-template-columns: minmax(0, 1fr); -webkit-mask: none; mask: none; }
-  .ticket .corps { padding: 26px 26px 14px; }
-  .ticket .talon { border-left: 0; border-top: 3px dashed rgba(58, 44, 0, .45); padding: 16px 26px 26px; justify-items: start; text-align: left; }
-  .colonnes, .duo { grid-template-columns: minmax(0, 1fr); }
-  .actions .bouton, .ticket .bouton { width: 100%; }
-  .vitrine { padding-bottom: 18%; }
-}
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
 <header class="cadre entete">
-  <a class="marque" href="#haut" aria-label="DH Logiciels, haut de page">
+  <a class="marque" href="/" aria-label="DH Logiciels, accueil">
     <svg width="38" height="38" viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#17324f"/><text x="19" y="25.5" text-anchor="middle" font-family="Archivo, Arial Narrow, sans-serif" font-weight="900" font-size="17" fill="#fff">D<tspan fill="#ffd23f">H</tspan></text></svg>
     DH Logiciels
   </a>
   <nav aria-label="Menu">
-    <a class="lien" href="#fonctions">AssoGestion</a>
-    <a class="lien" href="#acheter">Tarif</a>
-    <a class="lien" href="planning-horaire-gratuit/">Planning gratuit</a>
-    <a class="lien" href="#sur-mesure">Sur mesure</a>
-    <a class="lien" href="#contact">Contact</a>
-    <a class="bouton petit jaune" href="https://github.com/David57310/AssoGestion/releases/download/v1.1/Installer-AssoGestion-V1.1.exe">Télécharger l'essai</a>
+    <a class="lien" href="/" aria-current="page">Accueil</a>
+    <a class="lien" href="/assogestion/">AssoGestion</a>
+    <a class="lien" href="/planning-horaire-gratuit/">Planning Excel</a>
+    <a class="lien" href="/#sur-mesure">Sur mesure</a>
+    <a class="lien" href="/#contact">Contact</a>
+    <a class="lien" href="/telechargements/">Téléchargements</a>
   </nav>
 </header>
 
 <main id="haut">
-  <section class="cadre ouverture">
-    <div>
-      <p class="surtitre">AssoGestion, pour les associations loi 1901</p>
-      <h1>Toute votre asso dans un seul logiciel, <mark>payé une fois</mark>.</h1>
-      <p class="chapeau">Adhérents, cotisations, trésorerie, buvette, prêts de matériel, reçus fiscaux. Sur votre PC, sans Internet et sans abonnement.</p>
-      <div class="actions">
-        <a class="bouton plein" href="https://github.com/David57310/AssoGestion/releases/download/v1.1/Installer-AssoGestion-V1.1.exe">Télécharger l'essai gratuit</a>
-        <a class="bouton" href="#acheter">Acheter la licence</a>
-      </div>
-      <p class="sur-mobile">Vous êtes sur téléphone ? AssoGestion s'installe sur un ordinateur Windows. <a href="mailto:?subject=AssoGestion%20-%20logiciel%20pour%20l'association&amp;body=Lien%20de%20t%C3%A9l%C3%A9chargement%20%C3%A0%20ouvrir%20sur%20le%20PC%20%3A%20https%3A%2F%2Fgithub.com%2FDavid57310%2FAssoGestion%2Freleases%2Fdownload%2Fv1.1%2FInstaller-AssoGestion-V1.1.exe">Envoyez-vous le lien par e-mail</a> pour le télécharger plus tard sur votre PC.</p>
-      <ul class="garanties">
-        <li>Essai complet 20 jours</li>
-        <li>Démo déjà remplie</li>
-        <li>Windows 10 et 11</li>
-      </ul>
-    </div>
-    <div class="vitrine">
-      <figure class="fenetre principale">
-        <div class="barre"><i></i><i></i><i></i><span>AssoGestion</span></div>
-        <img src="img/accueil.png" width="982" height="585" alt="Écran d'accueil d'AssoGestion : tuiles Adhérents, Cotisations, Trésorerie, Tableau de bord, Bilan AG, Activités, Sport, Familles, Dons, Subventions, Événements, Matériel et Paramètres.">
-      </figure>
-      <figure class="fenetre secondaire">
-        <div class="barre"><i></i><i></i><i></i><span>Tableau de bord</span></div>
-        <img src="img/tableau.png" width="1482" height="931" alt="Tableau de bord : 31 adhérents actifs, cotisations reçues, soldes banque et caisse, recettes et dépenses par catégorie.">
-      </figure>
-    </div>
+  <section class="cadre accueil-ouverture">
+    <p class="surtitre">DH Logiciels · éditeur indépendant à Guénange (Moselle)</p>
+    <h1>Des outils simples, <mark>payés une fois</mark>.</h1>
+    <p class="chapeau">Logiciels et modèles Excel pour les associations, les commerces et les petites entreprises. Sans abonnement, vos données restent chez vous.</p>
   </section>
 
-  <section class="cadre offre" id="acheter" aria-label="Acheter la licence">
-    <div class="ticket">
-      <div class="corps">
-        <span class="numero" id="offre-titre">Offre de lancement · jusqu'au 31 décembre 2026</span>
-        <h2 id="offre-h2">La licence à vie à 35 €</h2>
-        <p>Un seul paiement pour votre association, toutes les fonctions comprises, mises à jour incluses. Pas d'abonnement, pas de frais par adhérent.</p>
-        <p>Paiement par carte bancaire, sécurisé par Stripe, ou par virement ou chèque. Vous recevez votre clé et votre facture par e-mail.</p>
-        <p class="mention">TVA non applicable, art. 293 B du CGI : le prix affiché est le prix payé.</p>
-      </div>
-      <div class="talon">
-        <span class="barre-prix" id="prix-barre">49 €</span>
-        <span class="prix" id="prix-actuel">35<small> €</small></span>
-        <button class="bouton fonce" type="button" id="bouton-achat">Payer par carte</button>
-        <button class="choix-autre" type="button" id="bouton-virement" aria-controls="commande" aria-expanded="false">Payer par virement ou chèque</button>
-        <p class="etat-achat" id="etat-achat" role="status"></p>
-      </div>
-    </div>
-
-    <div class="commande" id="commande" hidden>
-      <h3>Commander par virement ou chèque</h3>
-      <p class="aide">Remplissez ces informations : elles servent à fabriquer votre clé et à établir la facture. Un e-mail prêt à envoyer s'ouvre ensuite ; vous recevez en réponse les modalités de paiement (RIB ou adresse d'envoi du chèque), puis votre clé et votre facture dès réception du règlement.</p>
-      <form class="formulaire" id="form-commande" novalidate>
-        <label class="large">Nom exact de l'association * <span>écrit comme dans vos statuts : ce sera le nom de la licence</span>
-          <input id="c-nom" autocomplete="organization" required></label>
-        <label class="large">Adresse complète *
-          <textarea id="c-adresse" autocomplete="street-address" required></textarea></label>
-        <label>Nom du contact *
-          <input id="c-contact" autocomplete="name" required></label>
-        <label>Fonction <span>facultatif</span>
-          <input id="c-fonction" placeholder="ex. : président(e), trésorier(ère)"></label>
-        <label>E-mail *
-          <input id="c-email" type="email" autocomplete="email" required></label>
-        <label>Téléphone <span>facultatif</span>
-          <input id="c-tel" type="tel" autocomplete="tel"></label>
-        <label>N° RNA ou SIRET <span>facultatif</span>
-          <input id="c-rna" placeholder="W571234567 ou n° SIRET"></label>
-        <label>Paiement souhaité *
-          <select id="c-mode"><option>Virement bancaire</option><option>Chèque</option></select></label>
-        <div class="large actions-commande">
-          <button class="bouton plein" type="submit">Préparer l'e-mail</button>
-          <button class="bouton" type="button" id="c-copier">Copier la demande</button>
+  <section class="cadre offres" aria-label="Ce que je propose">
+    <article class="offre-carte">
+      <div class="visuel"><img src="/img/accueil.png" width="982" height="585" alt="Écran d'accueil d'AssoGestion avec ses modules."></div>
+      <div class="contenu">
+        <span class="pour">Pour les associations · Windows</span>
+        <h2>AssoGestion</h2>
+        <p>Le logiciel complet des petites associations : adhérents, cotisations, trésorerie, buvette, matériel, reçus fiscaux.</p>
+        <p class="prix-ligne">Essai gratuit 20 jours, puis licence à vie <span class="pastille" id="prix-asso">35 € jusqu'au 31/12</span></p>
+        <div class="bas">
+          <a class="bouton plein" href="/assogestion/">Découvrir AssoGestion</a>
         </div>
-        <p class="large erreur-commande" id="c-message" role="status"></p>
-        <pre class="large apercu" id="c-apercu" hidden></pre>
-      </form>
-    </div>
-  </section>
-
-  <section class="cadre fonctions" id="fonctions" aria-label="Ce que fait AssoGestion">
-    <article class="fonction">
-      <div class="texte">
-        <span class="etiquette">Cotisations</span>
-        <h2>Qui a payé, qui doit encore, en un coup d'œil.</h2>
-        <p>Chaque cotisation passe en vert, en orange ou en rouge. Les attestations et les lettres de relance se font en un clic, avec le RIB de l'association.</p>
-        <ul>
-          <li>Chèque, espèces, virement ou HelloAsso</li>
-          <li>Remises famille à partir du 2e membre</li>
-          <li>Recettes ajoutées toutes seules à la trésorerie</li>
-        </ul>
-      </div>
-      <figure class="fenetre">
-        <div class="barre"><i></i><i></i><i></i><span>Cotisations</span></div>
-        <img src="img/cotisations.png" width="1920" height="991" loading="lazy" alt="Liste des cotisations de la saison avec les statuts Payé, Partiel et Impayé.">
-      </figure>
-    </article>
-
-    <article class="fonction">
-      <div class="texte">
-        <span class="etiquette">Buvette, kermesse, loto</span>
-        <h2>Une vraie caisse pour vos manifestations.</h2>
-        <p>De gros boutons pour chaque article, le rendu de monnaie, la carte et les chèques. En haut, une jauge montre en direct si les frais de la fête sont couverts.</p>
-        <ul>
-          <li>Articles et prix à votre goût</li>
-          <li>Comptage de la caisse à la fermeture, écart affiché</li>
-          <li>Bilan de la manifestation prêt à imprimer</li>
-        </ul>
-      </div>
-      <figure class="fenetre">
-        <div class="barre"><i></i><i></i><i></i><span>Caisse - Téléthon</span></div>
-        <img src="img/caisse.png" width="1920" height="700" loading="lazy" alt="Caisse de la buvette : boissons, hamburger, saucisse blanche, merguez, crêpes, tombola, ticket en cours et boutons Espèces, Carte, Chèque.">
-      </figure>
-    </article>
-
-    <article class="fonction">
-      <div class="texte">
-        <span class="etiquette">Matériel</span>
-        <h2>Tables, barnums, sono : fini les prêts oubliés.</h2>
-        <p>L'inventaire de tout votre matériel, et pour chaque prêt les dates, la location et la caution. Le logiciel refuse de prêter ce qui est déjà réservé ce jour-là, et prévient quand quelque chose n'est pas revenu.</p>
-        <ul>
-          <li>Liste type pour comité des fêtes en un clic</li>
-          <li>Bon de prêt à faire signer</li>
-          <li>Matériel manquant retiré du stock au retour</li>
-        </ul>
-      </div>
-      <div class="duo">
-        <figure class="fenetre">
-          <div class="barre"><i></i><i></i><i></i><span>Matériel</span></div>
-          <img src="img/materiel.png" width="1920" height="760" loading="lazy" alt="Inventaire du matériel : bancs, chaises, tables, barnums, friteuse, plancha, avec quantités sorties et disponibles.">
-        </figure>
-        <figure class="fenetre">
-          <div class="barre"><i></i><i></i><i></i><span>Nouveau prêt</span></div>
-          <img src="img/pret.png" width="1107" height="853" loading="lazy" alt="Formulaire de prêt : 20 bancs, 40 chaises, 10 tables et 2 barnums pour Les Amis du Carnaval, location et caution calculées.">
-        </figure>
       </div>
     </article>
-
-    <article class="fonction">
-      <div class="texte">
-        <span class="etiquette">Trésorerie et assemblée générale</span>
-        <h2>Les comptes à jour, le bilan d'AG en un clic.</h2>
-        <p>Recettes et dépenses, banque et caisse, pointage des relevés. Le tableau de bord résume la saison, et le bilan d'assemblée générale sort avec votre logo.</p>
-        <ul>
-          <li>Clôture des exercices</li>
-          <li>Reçus fiscaux numérotés (modèle Cerfa 11580)</li>
-          <li>Suivi des subventions et des comptes rendus</li>
-        </ul>
-      </div>
-      <div class="duo">
-        <figure class="fenetre">
-          <div class="barre"><i></i><i></i><i></i><span>Trésorerie</span></div>
-          <img src="img/tresorerie.png" width="1920" height="991" loading="lazy" alt="Trésorerie de la saison avec recettes, dépenses, comptes et pointage.">
-        </figure>
-        <figure class="fenetre">
-          <div class="barre"><i></i><i></i><i></i><span>Tableau de bord</span></div>
-          <img src="img/tableau.png" width="1482" height="931" loading="lazy" alt="Tableau de bord : adhérents actifs, cotisations reçues, soldes, recettes et dépenses par catégorie.">
-        </figure>
+    <article class="offre-carte">
+      <div class="visuel"><img src="/img/planning-gratuit.png" width="1561" height="800" alt="Aperçu du planning horaire hebdomadaire Excel."></div>
+      <div class="contenu">
+        <span class="pour">Pour les commerces, TPE, associations · Excel</span>
+        <h2>Planning horaire</h2>
+        <p>Un planning de travail hebdomadaire prêt à remplir et à afficher. Version Pro avec calcul des heures bientôt disponible.</p>
+        <p class="prix-ligne"><span class="pastille">Gratuit</span> sans inscription</p>
+        <div class="bas">
+          <a class="bouton plein" href="/planning-horaire-gratuit/">Voir le planning</a>
+        </div>
       </div>
     </article>
-
-    <article class="fonction">
-      <div class="texte">
-        <span class="etiquette">Adhérents</span>
-        <h2>Vos membres, bien rangés et protégés.</h2>
-        <p>Une fiche par adhérent avec sa photo, son adhésion et sa fonction au bureau. Import depuis Excel, et le RGPD prévu dès le départ : consentements, registre, effacement.</p>
-      </div>
-      <div class="duo">
-        <figure class="fenetre">
-          <div class="barre"><i></i><i></i><i></i><span>Adhérents</span></div>
-          <img src="img/adherents.png" width="1920" height="991" loading="lazy" alt="Liste des adhérents avec catégorie, fonction au bureau, téléphone, e-mail et ville.">
-        </figure>
-        <figure class="fenetre">
-          <div class="barre"><i></i><i></i><i></i><span>Fiche adhérent</span></div>
-          <img src="img/fiche.png" width="857" height="933" loading="lazy" alt="Fiche d'une adhérente avec photo, coordonnées, catégorie, consentements et fonction de présidente.">
-        </figure>
+    <article class="offre-carte">
+      <div class="visuel icone"><svg width="120" height="90" viewBox="0 0 120 90" aria-hidden="true"><rect x="6" y="6" width="108" height="78" rx="8" fill="none" stroke="#ffd23f" stroke-width="4"/><path d="M6 26h108M42 26v58M78 26v58M6 46h108M6 66h108" stroke="#eef1f4" stroke-width="2" opacity=".55"/><path d="M50 56l8 8 16-18" fill="none" stroke="#ffd23f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="contenu">
+        <span class="pour">Pour les associations, petites structures, collectivités</span>
+        <h2>Sur mesure</h2>
+        <p>Un fichier Excel automatisé, des macros VBA ou un petit logiciel Windows, fait pour votre façon de travailler.</p>
+        <p class="prix-ligne"><span class="pastille">Devis gratuit</span> par e-mail</p>
+        <div class="bas">
+          <a class="bouton plein" href="#sur-mesure">En savoir plus</a>
+        </div>
       </div>
     </article>
   </section>
 
-  <section class="cadre bloc" aria-labelledby="titre-compris">
-    <h2 class="section-titre" id="titre-compris">Tout est compris dans la licence</h2>
-    <p class="intro">Chaque association affiche seulement les modules qui la concernent. Les autres restent cachés, prêts le jour où vous en aurez besoin.</p>
-    <div class="modules">
-      <div class="module"><b>Adhérents</b><span>Fiches, photos, import Excel, bureau et comité</span></div>
-      <div class="module"><b>Cotisations</b><span>Saisons, paiements, attestations, relances</span></div>
-      <div class="module"><b>Trésorerie</b><span>Banque et caisse, pointage, clôture</span></div>
-      <div class="module"><b>Tableau de bord et bilan d'AG</b><span>Les chiffres de la saison, rapport imprimable</span></div>
-      <div class="module"><b>Événements</b><span>Caisse de buvette, jauge des frais, bilan</span></div>
-      <div class="module"><b>Matériel</b><span>Inventaire, prêts, locations, cautions</span></div>
-      <div class="module"><b>Dons</b><span>Reçus fiscaux numérotés, abandons de frais</span></div>
-      <div class="module"><b>Subventions</b><span>Dossiers, versements, comptes rendus</span></div>
-      <div class="module"><b>Activités</b><span>Ateliers, sorties, inscriptions, présences</span></div>
-      <div class="module"><b>Sport</b><span>Licences, certificats, catégories d'âge, équipes</span></div>
-      <div class="module"><b>Familles</b><span>Foyers, remises, règlement groupé</span></div>
-      <div class="module"><b>Sécurité</b><span>Mot de passe, sauvegardes automatiques, historique</span></div>
+  <section class="cadre bloc" aria-labelledby="titre-pourquoi">
+    <h2 class="section-titre" id="titre-pourquoi">Pourquoi DH Logiciels ?</h2>
+    <div class="atouts">
+      <div class="atout"><b>Payé une fois</b><span>Pas d'abonnement ni de frais cachés : vous achetez, c'est à vous.</span></div>
+      <div class="atout"><b>Vos données chez vous</b><span>Tout reste sur votre ordinateur, sans compte en ligne ni publicité.</span></div>
+      <div class="atout"><b>Un vrai interlocuteur</b><span>Je réponds moi-même à vos questions, par e-mail.</span></div>
     </div>
   </section>
 
-  <section class="cadre bloc calcul" aria-labelledby="titre-calcul">
-    <div>
-      <h2 class="section-titre" id="titre-calcul">Le calcul est vite fait.</h2>
-      <p>Les logiciels en ligne pour associations se paient chaque mois, souvent plus de 10 € et parfois plus de 20 €, et le prix monte avec le nombre d'adhérents. AssoGestion se paie une fois, et vos données restent sur votre ordinateur.</p>
-    </div>
-    <div class="colonnes">
-      <div class="colonne">
-        <div class="qui">Abonnement en ligne</div>
-        <div class="montant">120 €</div>
-        <div class="detail">et plus, chaque année, à 10 € par mois</div>
-      </div>
-      <div class="colonne nous">
-        <div class="qui">AssoGestion</div>
-        <div class="montant" id="calcul-montant">35 €</div>
-        <div class="detail" id="calcul-detail">une seule fois, jusqu'au 31 décembre 2026 (ensuite 49 €)</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cadre bloc etapes" aria-labelledby="titre-etapes">
-    <h2 class="section-titre" id="titre-etapes">Essayez avant de payer</h2>
-    <ol>
-      <li><b>Téléchargez</b>La démo s'ouvre sur une association fictive déjà remplie. Vous pouvez tout essayer : elle revient à zéro à chaque ouverture.</li>
-      <li><b>Testez avec vos données</b>La version complète marche 20 jours sans aucune limite. Ensuite, vos données restent consultables.</li>
-      <li><b>Achetez et recevez votre clé</b>Payez par carte, par virement ou par chèque, sur ce site ou depuis le bouton « Acheter » du logiciel. Vous recevez votre clé à vie et votre facture par e-mail.</li>
-    </ol>
-  </section>
-
-  <section class="cadre bloc deux" aria-labelledby="titre-questions">
-    <h2 class="section-titre" id="titre-questions">Vos questions</h2>
-    <div>
-      <details>
-        <summary>Comment se passe le paiement ?</summary>
-        <p>Par carte bancaire, sur une page de paiement sécurisée Stripe (Apple Pay et Google Pay acceptés). Indiquez le nom exact de l'association et son adresse : ils figureront sur la facture. Votre clé arrive par e-mail sous 48 heures ouvrées, souvent bien avant.</p>
-        <p>Vous préférez payer par virement ou par chèque ? Cliquez sur « Payer par virement ou chèque » sous le prix, ou dans le logiciel sur « Acheter » puis « Commander par e-mail ». Vous recevez les modalités de paiement, puis votre clé et votre facture dès réception du règlement.</p>
-      </details>
-      <details>
-        <summary>Pouvez-vous nous faire une facture pour la trésorerie ?</summary>
-        <p>Oui, chaque achat donne lieu à une facture au nom de l'association, envoyée par e-mail. TVA non applicable, art. 293 B du CGI.</p>
-      </details>
-      <details>
-        <summary>Faut-il Internet pour l'utiliser ?</summary>
-        <p>Non. Le logiciel et vos données sont sur votre PC. Internet sert seulement à le télécharger et à envoyer un e-mail de relance si vous le souhaitez.</p>
-      </details>
-      <details>
-        <summary>Ça marche sur Mac, sur tablette ou sur téléphone ?</summary>
-        <p>AssoGestion fonctionne sur les PC et les tablettes sous Windows 10 ou 11. Il ne fonctionne pas sur Mac, iPad ni Android.</p>
-      </details>
-      <details>
-        <summary>Windows affiche « Windows a protégé votre ordinateur »</summary>
-        <p>C'est normal pour un logiciel tout nouveau. Cliquez sur « Informations complémentaires », puis sur « Exécuter quand même ».</p>
-      </details>
-      <details>
-        <summary>Que deviennent mes données si mon ordinateur tombe en panne ?</summary>
-        <p>AssoGestion fait une sauvegarde automatique à chaque fermeture et vous rappelle de faire régulièrement une copie sur une clé USB. Vous la restaurez sur un autre PC en deux clics.</p>
-      </details>
-      <details>
-        <summary>Et après l'essai, si je n'achète pas ?</summary>
-        <p>Rien n'est perdu : vous pouvez toujours consulter, imprimer, exporter et sauvegarder vos données. Seules les modifications sont bloquées.</p>
-      </details>
-    </div>
-  </section>
-
-  <section class="cadre bloc" id="planning" aria-labelledby="titre-planning">
-    <div class="mesure">
-      <div>
-        <p class="surtitre">Modèle Excel gratuit</p>
-        <h2 class="section-titre" id="titre-planning">Planning horaire de travail à imprimer</h2>
-        <p>Un planning hebdomadaire Excel prêt à remplir pour vos salariés ou vos bénévoles : du lundi au dimanche, une page A4 à afficher. Sans inscription.</p>
-      </div>
-      <div>
-        <ul class="puces">
-          <li>Jusqu'à 15 personnes, horaires de début et de fin</li>
-          <li>Dates et numéro de semaine automatiques</li>
-          <li>Excel 2016 et +, LibreOffice, ou PDF à remplir à la main</li>
-        </ul>
-        <p><a class="bouton plein" href="planning-horaire-gratuit/">Voir et télécharger le planning</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="cadre bloc" id="sur-mesure" aria-labelledby="titre-mesure">
+<section class="cadre bloc" id="sur-mesure" aria-labelledby="titre-mesure">
     <div class="mesure">
       <div>
         <h2 class="section-titre" id="titre-mesure">Un besoin particulier ?</h2>
@@ -512,178 +108,40 @@ footer a { color: var(--doux); }
   <section class="cadre bloc contact" id="contact" aria-labelledby="titre-contact">
     <div class="boite">
       <div>
-        <h2 id="titre-contact">Une question ?</h2>
-        <p>Je développe AssoGestion et je réponds moi-même à chaque message, pour l'installation, l'achat ou vos idées d'amélioration.</p>
+        <h2 id="titre-contact">Une question, un projet ?</h2>
+        <p>Je développe moi-même chaque outil et je réponds à chaque message : installation, achat, devis ou idée d'amélioration.</p>
         <p class="adresse" id="adresse">DH-Logiciels@outlook.fr</p>
         <p class="copie" id="message-copie" role="status"></p>
-        <p class="aide-install"><strong>À l'installation :</strong> si Windows affiche « Windows a protégé votre ordinateur », cliquez sur <em>Informations complémentaires</em>, puis sur <em>Exécuter quand même</em>. Ce message apparaît pour les logiciels récents de petits éditeurs ; AssoGestion ne contient ni publicité ni pisteur.</p>
       </div>
       <div class="liens">
-        <a class="bouton jaune" href="https://github.com/David57310/AssoGestion/releases/download/v1.1/Installer-AssoGestion-V1.1.exe">Télécharger AssoGestion</a>
-        <a class="bouton" href="mailto:DH-Logiciels@outlook.fr?subject=AssoGestion">Écrire un e-mail</a>
+        <a class="bouton jaune" href="mailto:DH-Logiciels@outlook.fr">Écrire un e-mail</a>
         <button class="bouton" type="button" id="copier">Copier l'adresse</button>
       </div>
     </div>
   </section>
 
-  <section class="cadre bloc deux" id="legal" aria-labelledby="titre-legal">
-    <h2 class="section-titre" id="titre-legal">Mentions légales et conditions de vente</h2>
-    <div>
-      <details>
-        <summary>Mentions légales</summary>
-        <ul>
-          <li>Éditeur du site : DH Logiciels, David Hourt, entrepreneur individuel (EI)</li>
-          <li>SIREN 418 162 178 · 8 rue Mozart, 57310 Guénange</li>
-          <li>Contact : DH-Logiciels@outlook.fr</li>
-          <li>Directeur de la publication : David Hourt</li>
-          <li>Hébergeur : GitHub, Inc. (GitHub Pages), 88 Colin P Kelly Jr Street, San Francisco, CA 94107, États-Unis</li>
-          <li>TVA non applicable, art. 293 B du CGI</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Conditions générales de vente</summary>
-        <ul>
-          <li><b>Produit :</b> licence d'utilisation à vie du logiciel AssoGestion pour une association, sur ses ordinateurs Windows, mises à jour comprises.</li>
-          <li><b>Prix :</b> 49 € (35 € jusqu'au 31 décembre 2026), payable en une fois. TVA non applicable, art. 293 B du CGI.</li>
-          <li><b>Paiement :</b> par carte bancaire via Stripe (DH Logiciels n'a jamais accès à vos données de carte), ou par virement ou chèque après commande par e-mail.</li>
-          <li><b>Livraison :</b> la clé de licence et la facture sont envoyées par e-mail sous 48 heures ouvrées après le paiement par carte, ou dès réception du virement ou du chèque.</li>
-          <li><b>Essai :</b> la version complète peut être essayée gratuitement 20 jours avant tout achat.</li>
-          <li><b>Rétractation :</b> la clé étant un contenu numérique fourni après le paiement avec l'accord de l'acheteur, le droit de rétractation ne s'applique pas une fois la clé envoyée (art. L221-28 du Code de la consommation).</li>
-          <li><b>Assistance :</b> par e-mail, à l'adresse DH-Logiciels@outlook.fr.</li>
-          <li><b>Litiges :</b> en cas de difficulté, contactez-nous d'abord par e-mail pour trouver une solution amiable. À défaut, les tribunaux français sont compétents.</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Données personnelles</summary>
-        <p>Les informations données lors de l'achat (nom de l'association, adresse, contact, e-mail) servent uniquement à établir la facture, envoyer la clé et assurer l'assistance. Elles ne sont ni revendues ni utilisées pour de la publicité. Vous pouvez demander à les consulter, les corriger ou les effacer à l'adresse DH-Logiciels@outlook.fr. Ce site n'utilise ni cookie publicitaire ni outil de suivi.</p>
-      </details>
-    </div>
-  </section>
 </main>
 
 <footer class="cadre">
-  <span>DH Logiciels · éditeur d'AssoGestion</span>
-  <span>Windows 10 et 11 · sans abonnement · données sur votre PC</span>
-  <span>David Hourt EI · SIREN 418 162 178 · 8 rue Mozart, 57310 Guénange · <a href="#legal">Mentions légales</a></span>
+  <span>DH Logiciels · logiciels et modèles Excel pour les associations et les petites structures</span>
+  <nav aria-label="Pied de page"><a href="/assogestion/">AssoGestion</a><a href="/planning-horaire-gratuit/">Planning Excel</a><a href="/telechargements/">Téléchargements</a><a href="/#contact">Contact</a><a href="/mentions-legales/">Mentions légales et CGV</a></nav>
+  <span>David Hourt EI · SIREN 418 162 178 · 8 rue Mozart, 57310 Guénange</span>
 </footer>
 
 <script>
 {
-  // Liens de paiement Stripe : offre de lancement (35 €) jusqu'au 31/12/2026, puis tarif normal (49 €)
-  const LIEN_LANCEMENT = "https://buy.stripe.com/14AaEWanD5I57HPfwBaMU00";
-  const LIEN_NORMAL = "https://buy.stripe.com/28E6oGdzPeeB3rzckpaMU01";
-  const FIN_OFFRE = new Date("2027-01-01T00:00:00+01:00");
-  const offreFinie = new Date() >= FIN_OFFRE;
-  const LIEN_STRIPE = offreFinie ? LIEN_NORMAL : LIEN_LANCEMENT;
+  // Anciens liens (ex. bouton « Acheter » du logiciel) : dh-logiciels.com/#acheter -> page AssoGestion
+  const h = location.hash;
+  if (["#acheter", "#fonctions", "#commande"].includes(h)) location.replace("/assogestion/" + h);
+  else if (h === "#legal") location.replace("/mentions-legales/");
 
-  if (offreFinie) {
-    const mettre = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
-    mettre("offre-titre", "Licence à vie · paiement unique");
-    mettre("offre-h2", "La licence à vie à 49 €");
-    const barre = document.getElementById("prix-barre"); if (barre) barre.style.display = "none";
-    mettre("prix-actuel", "49<small> €</small>");
-    mettre("calcul-montant", "49 €");
-    mettre("calcul-detail", "une seule fois, pour toujours");
+  if (new Date() >= new Date("2027-01-01T00:00:00+01:00")) {
+    const p = document.getElementById("prix-asso"); if (p) p.textContent = "49 €";
   }
-
-  const boutonAchat = document.getElementById("bouton-achat");
-  const etatAchat = document.getElementById("etat-achat");
-  boutonAchat.addEventListener("click", () => {
-    if (LIEN_STRIPE) {
-      const lien = document.createElement("a");
-      lien.href = LIEN_STRIPE;
-      lien.target = "_blank";
-      lien.rel = "noopener";
-      document.body.appendChild(lien);
-      lien.click();
-      lien.remove();
-      etatAchat.textContent = "La page de paiement s'ouvre dans un nouvel onglet.";
-    } else {
-      etatAchat.textContent = "Le paiement en ligne arrive très bientôt. En attendant, écrivez à DH-Logiciels@outlook.fr pour commander.";
-    }
-  });
-
-  // ---- Commande par virement ou chèque : même format d'e-mail que le logiciel (lu par AssoGestion Admin) ----
-  const EMAIL = "DH-Logiciels@outlook.fr";
-  const zoneCommande = document.getElementById("commande");
-  const boutonVirement = document.getElementById("bouton-virement");
-  const msgCommande = document.getElementById("c-message");
-  const apercu = document.getElementById("c-apercu");
-  const val = id => document.getElementById(id).value.trim();
-  const prixDetail = () => offreFinie ? "49 €" : "35 € (offre de lancement jusqu'au 31/12/2026, au lieu de 49 €)";
-
-  boutonVirement.addEventListener("click", () => {
-    zoneCommande.hidden = false;
-    boutonVirement.setAttribute("aria-expanded", "true");
-    zoneCommande.scrollIntoView({ behavior: "smooth", block: "start" });
-    setTimeout(() => document.getElementById("c-nom").focus({ preventScroll: true }), 400);
-  });
-
-  function verifier() {
-    const manque = !val("c-nom") ? "le nom exact de l'association"
-      : !val("c-adresse") ? "l'adresse complète"
-      : !val("c-contact") ? "le nom du contact"
-      : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val("c-email")) ? "une adresse e-mail valide" : "";
-    msgCommande.textContent = manque ? "Indiquez " + manque + "." : "";
-    return !manque;
-  }
-  function sujet() { return "Achat licence AssoGestion - " + val("c-nom"); }
-  function corps() {
-    const n = "\n";
-    const adresse = val("c-adresse").split(/\r?\n/).map(l => l.trim()).filter(Boolean).join(", ");
-    const fonction = val("c-fonction");
-    return "Bonjour," + n + n +
-      "Je souhaite acheter la licence à vie d'AssoGestion (" + prixDetail() + ")." + n + n +
-      "=== Informations pour la licence et la facture ===" + n +
-      "Nom exact de l'association : " + val("c-nom") + n +
-      "Adresse : " + adresse + n +
-      "Contact : " + val("c-contact") + (fonction ? " (" + fonction + ")" : "") + n +
-      "E-mail : " + val("c-email") + n +
-      (val("c-tel") ? "Téléphone : " + val("c-tel") + n : "") +
-      (val("c-rna") ? "N° RNA / SIRET : " + val("c-rna") + n : "") +
-      "Paiement souhaité : " + val("c-mode") + n +
-      "Commande passée depuis le site dh-logiciels.com" + n +
-      "==================================================" + n + n +
-      "Merci de m'indiquer les modalités de paiement." + n + n +
-      val("c-contact");
-  }
-  function montrerApercu() {
-    apercu.textContent = "À : " + EMAIL + "\nObjet : " + sujet() + "\n\n" + corps();
-    apercu.hidden = false;
-  }
-
-  document.getElementById("form-commande").addEventListener("submit", e => {
-    e.preventDefault();
-    if (!verifier()) return;
-    const lien = document.createElement("a");
-    lien.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent(sujet()) + "&body=" + encodeURIComponent(corps());
-    document.body.appendChild(lien);
-    lien.click();
-    lien.remove();
-    msgCommande.textContent = "";
-    montrerApercu();
-    msgCommande.textContent = "Votre messagerie devrait s'ouvrir avec l'e-mail prêt à envoyer. Sinon, cliquez sur « Copier la demande » et collez-la dans un e-mail à " + EMAIL + ".";
-  });
-
-  document.getElementById("c-copier").addEventListener("click", async () => {
-    if (!verifier()) return;
-    montrerApercu();
-    try {
-      await navigator.clipboard.writeText(apercu.textContent);
-      msgCommande.textContent = "Demande copiée : collez-la dans un e-mail à " + EMAIL + ".";
-    } catch (err) {
-      msgCommande.textContent = "Copie impossible ici : sélectionnez le texte ci-dessous et envoyez-le à " + EMAIL + ".";
-    }
-  });
-
   document.getElementById("copier").addEventListener("click", async () => {
     const zone = document.getElementById("message-copie");
-    try {
-      await navigator.clipboard.writeText("DH-Logiciels@outlook.fr");
-      zone.textContent = "Adresse copiée.";
-    } catch (e) {
-      zone.textContent = "Copie impossible ici : sélectionnez l'adresse ci-dessus.";
-    }
+    try { await navigator.clipboard.writeText("DH-Logiciels@outlook.fr"); zone.textContent = "Adresse copiée."; }
+    catch (e) { zone.textContent = "Copie impossible ici : sélectionnez l'adresse ci-dessus."; }
   });
 }
 </script>
