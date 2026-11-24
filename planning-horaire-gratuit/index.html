@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planning horaire de travail gratuit Excel – semaine à imprimer | DH Logiciels</title>
+<meta name="description" content="Téléchargez gratuitement un planning horaire de travail hebdomadaire sous Excel : jusqu'à 15 salariés, du lundi au dimanche, à imprimer sur une page A4. Sans inscription, sans macro. Version PDF vierge incluse.">
+<link rel="canonical" href="https://dh-logiciels.com/planning-horaire-gratuit/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Planning horaire de travail gratuit (Excel, à imprimer)">
+<meta property="og:description" content="Planning hebdomadaire Excel gratuit, prêt à remplir et à afficher. Sans inscription.">
+<meta property="og:url" content="https://dh-logiciels.com/planning-horaire-gratuit/">
+<meta property="og:image" content="https://dh-logiciels.com/img/planning-gratuit.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE : affiche d'association, directe et chaleureuse, signée par un petit éditeur local.
+   IDEA : l'affiche du comité des fêtes, avec le prix traité comme un ticket de tombola.
+   PICTURE : captures du vrai logiciel dans des fenêtres Windows, en alternance.
+   COLOUR and TYPE : encre bleu ardoise sur papier gris froid, accent jaune ticket ; Archivo condensé + Atkinson Hyperlegible.
+   LAYOUT : site complet de DH Logiciels : en-tête, AssoGestion, achat, sur mesure, contact, mentions légales. */
+:root {
+  --papier: #eef1f4; --carte: #ffffff; --encre: #17324f; --texte: #1c2733; --doux: #55606d;
+  --ligne: #d3dae2; --signal: #ffd23f; --signal-encre: #3a2c00; --ok: #2e7d32;
+  --affiche: "Archivo", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --lecture: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --rayon: 10px;
+  --ombre: 0 1px 2px rgba(23, 50, 79, .08), 0 12px 32px -12px rgba(23, 50, 79, .28);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papier: #0f1822; --carte: #16222f; --encre: #e8eef5; --texte: #dde4ec; --doux: #9aa7b5;
+    --ligne: #2a3a4b; --signal: #ffd23f; --signal-encre: #2a2000; --ok: #66bb6a;
+    --ombre: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -14px rgba(0, 0, 0, .7); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --papier: #0f1822; --carte: #16222f; --encre: #e8eef5; --texte: #dde4ec; --doux: #9aa7b5;
+  --ligne: #2a3a4b; --signal: #ffd23f; --signal-encre: #2a2000; --ok: #66bb6a;
+  --ombre: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -14px rgba(0, 0, 0, .7); color-scheme: dark;
+}
+* { box-sizing: border-box; min-width: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--papier); color: var(--texte); font-family: var(--lecture); font-size: 1.0625rem; line-height: 1.55; overflow-x: clip; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+.cadre { width: min(1180px, 100% - 32px); margin-inline: auto; }
+
+/* En-tête */
+.entete { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; flex-wrap: wrap; }
+.marque { font-family: var(--affiche); font-stretch: 80%; font-weight: 800; font-size: 1.5rem; letter-spacing: -.01em; color: var(--encre); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.marque svg { flex: none; }
+.entete nav { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.entete nav .lien { text-decoration: none; font-weight: 700; color: var(--encre); padding: 10px 8px; }
+.entete nav .lien:hover { text-decoration: underline; }
+
+.bouton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 700 1rem/1 var(--lecture); padding: 14px 20px; min-height: 44px; border-radius: 8px; text-decoration: none; border: 2px solid var(--encre); color: var(--encre); background: transparent; transition: transform .15s ease; cursor: pointer; }
+.bouton:hover { transform: translateY(-1px); }
+.bouton.plein { background: var(--encre); color: var(--papier); }
+.bouton.jaune { background: var(--signal); border-color: var(--signal); color: var(--signal-encre); }
+.bouton.fonce { background: var(--signal-encre); border-color: var(--signal-encre); color: var(--signal); }
+.bouton.petit { padding: 10px 14px; font-size: .95rem; }
+
+/* Ouverture */
+.ouverture { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; align-items: center; padding-block: 32px 56px; }
+.surtitre { font-family: var(--affiche); font-stretch: 85%; font-weight: 700; font-size: .95rem; color: var(--doux); margin: 0 0 14px; }
+h1, h2, h3 { font-family: var(--affiche); color: var(--encre); text-wrap: balance; margin: 0; }
+h1 { font-stretch: 75%; font-weight: 900; line-height: .95; letter-spacing: -.015em; font-size: clamp(2.6rem, 6.2vw, 4.9rem); }
+h1 mark { background: linear-gradient(transparent 58%, var(--signal) 58%, var(--signal) 92%, transparent 92%); color: inherit; padding-inline: .04em; }
+.chapeau { font-size: 1.2rem; max-width: 34ch; margin: 22px 0 28px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.garanties { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 22px 0 0; padding: 0; list-style: none; color: var(--doux); font-size: .95rem; }
+.garanties li { display: flex; align-items: center; gap: 8px; }
+.garanties li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+.vitrine { position: relative; padding-bottom: 12%; }
+.fenetre { background: var(--carte); border-radius: var(--rayon); box-shadow: var(--ombre); border: 1px solid var(--ligne); overflow: hidden; margin: 0; }
+.fenetre .barre { height: 30px; display: flex; align-items: center; gap: 6px; padding-inline: 12px; background: #1f4e79; color: #fff; font-size: .78rem; font-weight: 700; }
+.fenetre .barre i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.35); }
+.fenetre .barre span { margin-left: 6px; opacity: .9; }
+.vitrine .principale { width: 86%; }
+.vitrine .secondaire { position: absolute; right: 0; bottom: 0; width: 62%; animation: glisse .9s cubic-bezier(.2, .7, .2, 1) .2s both; }
+@keyframes glisse { from { transform: translate(18px, 18px); } to { transform: none; } }
+
+/* Ticket d'achat */
+.offre { padding-block: 8px 64px; }
+.ticket { --trou: 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; background: var(--signal); color: var(--signal-encre); border-radius: 14px;
+  -webkit-mask: radial-gradient(circle var(--trou) at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle var(--trou) at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle var(--trou) at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle var(--trou) at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat; }
+.ticket .corps { padding: 28px 36px 28px 44px; display: grid; gap: 8px; }
+.ticket .talon { padding: 28px 44px 28px 36px; border-left: 3px dashed rgba(58, 44, 0, .45); display: grid; align-content: center; justify-items: center; text-align: center; gap: 6px; }
+.ticket .numero { font-family: var(--affiche); font-stretch: 80%; font-weight: 700; font-size: .9rem; }
+.ticket h2 { color: var(--signal-encre); font-stretch: 78%; font-weight: 900; font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1; }
+.ticket p { margin: 0; max-width: 54ch; }
+.ticket .mention { font-size: .9rem; opacity: .85; }
+.prix { font-family: var(--affiche); font-stretch: 75%; font-weight: 900; line-height: .9; font-size: clamp(3.6rem, 8vw, 5.6rem); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prix small { font-size: .45em; }
+.barre-prix { text-decoration: line-through; text-decoration-thickness: 2px; opacity: .75; font-weight: 700; }
+.etat-achat { font-size: .92rem; min-height: 1.4em; margin: 0; max-width: 24ch; }
+
+/* Commande par virement ou chèque */
+.choix-autre { background: none; border: 0; padding: 6px 0; color: var(--signal-encre); font: 700 .95rem/1.3 var(--lecture); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 44px; }
+.commande { margin-top: 20px; background: var(--carte); border: 1px solid var(--ligne); border-radius: 14px; padding: clamp(20px, 4vw, 36px); }
+.commande[hidden] { display: none; }
+.commande h3 { font-stretch: 80%; font-weight: 850; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+.commande .aide { color: var(--doux); margin: 8px 0 20px; max-width: 64ch; }
+.formulaire { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 20px; }
+.formulaire .large { grid-column: 1 / -1; }
+.formulaire label { display: grid; gap: 6px; font-weight: 700; color: var(--encre); font-size: .95rem; }
+.formulaire label span { font-weight: 400; color: var(--doux); }
+.formulaire input, .formulaire textarea, .formulaire select { font: 16px/1.4 var(--lecture); padding: 10px 12px; min-height: 44px; border: 1px solid var(--ligne); border-radius: 8px; background: var(--papier); color: var(--texte); width: 100%; }
+.formulaire textarea { min-height: 76px; resize: vertical; }
+.formulaire .actions-commande { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.erreur-commande { color: #b3261e; font-weight: 700; min-height: 1.4em; margin: 0; }
+.apercu { white-space: pre-wrap; background: var(--papier); border: 1px solid var(--ligne); border-radius: 8px; padding: 14px; font-size: .92rem; margin: 0; }
+.apercu[hidden] { display: none; }
+@media (max-width: 600px) { .formulaire { grid-template-columns: minmax(0, 1fr); } }
+
+/* Fonctions */
+.fonctions { display: grid; gap: 72px; padding-block: 24px 72px; }
+.fonction { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 48px; align-items: center; }
+.fonction:nth-child(even) { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); }
+.fonction:nth-child(even) .texte { order: 2; }
+.texte .etiquette { display: inline-block; font-family: var(--affiche); font-stretch: 85%; font-weight: 700; font-size: .95rem; color: var(--doux); margin-bottom: 10px; }
+.texte h2, .section-titre { font-stretch: 78%; font-weight: 850; font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1.02; }
+.texte p { margin: 14px 0 0; max-width: 46ch; }
+.texte ul, .puces { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.texte li, .puces li { padding-left: 22px; position: relative; }
+.texte li::before, .puces li::before { content: ""; position: absolute; left: 0; top: .62em; width: 12px; height: 3px; background: var(--signal); border-radius: 2px; }
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+
+.bloc { padding-block: 64px; border-top: 1px solid var(--ligne); }
+.intro { color: var(--doux); margin: 10px 0 28px; max-width: 60ch; }
+.modules { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1px; background: var(--ligne); border: 1px solid var(--ligne); border-radius: var(--rayon); overflow: hidden; }
+.module { background: var(--carte); padding: 18px 20px; display: grid; gap: 4px; }
+.module b { font-family: var(--affiche); font-stretch: 85%; font-size: 1.15rem; color: var(--encre); }
+.module span { color: var(--doux); font-size: .95rem; line-height: 1.4; }
+
+.calcul { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+.calcul p { max-width: 48ch; }
+.colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-self: center; }
+.colonne { background: var(--carte); border: 1px solid var(--ligne); border-radius: var(--rayon); padding: 20px; }
+.colonne.nous { border: 2px solid var(--encre); }
+.colonne .qui { font-weight: 700; color: var(--doux); font-size: .9rem; }
+.colonne .montant { font-family: var(--affiche); font-stretch: 78%; font-weight: 900; font-size: 2.6rem; color: var(--encre); line-height: 1.05; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.colonne .detail { font-size: .92rem; color: var(--doux); }
+
+.etapes ol { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: etape; }
+.etapes li { counter-increment: etape; background: var(--carte); border: 1px solid var(--ligne); border-radius: var(--rayon); padding: 22px; }
+.etapes li::before { content: counter(etape); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--encre); color: var(--papier); font-family: var(--affiche); font-weight: 900; font-size: 1.25rem; margin-bottom: 12px; }
+.etapes li b { display: block; font-size: 1.1rem; color: var(--encre); margin-bottom: 4px; }
+
+.deux { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 48px; }
+details { border-bottom: 1px solid var(--ligne); padding-block: 16px; }
+details:first-of-type { border-top: 1px solid var(--ligne); }
+summary { cursor: pointer; font-weight: 700; color: var(--encre); list-style: none; display: flex; justify-content: space-between; gap: 16px; min-height: 28px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--affiche); font-size: 1.4rem; line-height: 1; transition: transform .2s ease; }
+details[open] summary::after { transform: rotate(45deg); }
+details p, details li { max-width: 66ch; }
+details p { margin: 10px 0 0; }
+details ul { margin: 10px 0 0; padding-left: 20px; }
+.a-completer { background: var(--signal); color: var(--signal-encre); padding: 0 .3em; border-radius: 3px; font-weight: 700; }
+
+/* Sur mesure */
+.mesure { background: var(--carte); border: 1px solid var(--ligne); border-radius: 16px; padding: clamp(24px, 4vw, 44px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.mesure p { max-width: 52ch; }
+
+/* Contact */
+.contact .boite { background: var(--encre); color: var(--papier); border-radius: 16px; padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
+.contact h2 { color: var(--papier); }
+.contact p { margin: 12px 0 0; max-width: 52ch; opacity: .9; }
+.adresse { font-family: var(--affiche); font-stretch: 85%; font-weight: 700; font-size: clamp(1.2rem, 2.4vw, 1.6rem); overflow-wrap: anywhere; }
+.contact .liens { display: grid; gap: 10px; justify-items: start; }
+.contact .bouton { border-color: var(--papier); color: var(--papier); }
+.contact .bouton.jaune { color: var(--signal-encre); border-color: var(--signal); }
+.copie { font-size: .9rem; min-height: 1.4em; opacity: .85; }
+.aide-install { font-size: .95em; margin-top: 18px; max-width: 46ch; opacity: .9; }
+.sur-mobile { display: none; font-size: .95em; margin-top: 14px; }
+@media (pointer: coarse) and (max-width: 860px) { .sur-mobile { display: block; } }
+
+footer { padding-block: 24px 40px; color: var(--doux); font-size: .9rem; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; border-top: 1px solid var(--ligne); }
+footer a { color: var(--doux); }
+
+@media (max-width: 860px) {
+  .ouverture, .fonction, .fonction:nth-child(even), .calcul, .deux, .contact .boite, .mesure { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .fonction:nth-child(even) .texte { order: 0; }
+  .ouverture { padding-top: 8px; }
+  .etapes ol { grid-template-columns: minmax(0, 1fr); }
+  .fonctions { gap: 56px; }
+}
+@media (max-width: 600px) {
+  .entete nav .lien { display: none; }
+  .ticket { grid-template-columns: minmax(0, 1fr); -webkit-mask: none; mask: none; }
+  .ticket .corps { padding: 26px 26px 14px; }
+  .ticket .talon { border-left: 0; border-top: 3px dashed rgba(58, 44, 0, .45); padding: 16px 26px 26px; justify-items: start; text-align: left; }
+  .colonnes, .duo { grid-template-columns: minmax(0, 1fr); }
+  .actions .bouton, .ticket .bouton { width: 100%; }
+  .vitrine { padding-bottom: 18%; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+<style>.modules{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:760px){.modules{grid-template-columns:minmax(0,1fr)}}</style>
+</head>
+<body>
+<header class="cadre entete">
+  <a class="marque" href="../" aria-label="DH Logiciels, accueil">
+    <svg width="38" height="38" viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#17324f"/><text x="19" y="25.5" text-anchor="middle" font-family="Archivo, Arial Narrow, sans-serif" font-weight="900" font-size="17" fill="#fff">D<tspan fill="#ffd23f">H</tspan></text></svg>
+    DH Logiciels
+  </a>
+  <nav aria-label="Menu">
+    <a class="lien" href="../#fonctions">AssoGestion</a>
+    <a class="lien" href="../#sur-mesure">Sur mesure</a>
+    <a class="lien" href="../#contact">Contact</a>
+    <a class="bouton petit jaune" href="../telechargements/Planning-horaire-semaine-gratuit.xlsx" download>Télécharger le planning</a>
+  </nav>
+</header>
+
+<main id="haut">
+  <section class="cadre ouverture">
+    <div>
+      <p class="surtitre">Modèle Excel gratuit, pour les commerces, TPE et associations</p>
+      <h1>Planning horaire de travail <mark>gratuit</mark>, à imprimer.</h1>
+      <p class="chapeau">Un planning hebdomadaire Excel prêt à remplir : vos salariés, leurs horaires du lundi au dimanche, et une page A4 à afficher.</p>
+      <div class="actions">
+        <a class="bouton plein" href="../telechargements/Planning-horaire-semaine-gratuit.xlsx" download>Télécharger le fichier Excel</a>
+        <a class="bouton" href="../telechargements/Planning-horaire-semaine-vierge.pdf" download>Version PDF vierge</a>
+      </div>
+      <ul class="garanties">
+        <li>Gratuit, sans inscription</li>
+        <li>Excel 2016 et +, LibreOffice</li>
+        <li>1 page A4 paysage</li>
+      </ul>
+    </div>
+    <div>
+      <figure class="fenetre">
+        <div class="barre"><i></i><i></i><i></i><span>Planning-horaire-semaine-gratuit.xlsx</span></div>
+        <img src="../img/planning-gratuit.png" width="1561" height="800" alt="Aperçu du planning horaire hebdomadaire : une ligne par salarié, heures de début et de fin pour chaque jour du lundi au dimanche, week-end grisé.">
+      </figure>
+    </div>
+  </section>
+
+  <section class="cadre bloc etapes" aria-labelledby="titre-etapes">
+    <h2 class="section-titre" id="titre-etapes">Prêt en trois minutes</h2>
+    <ol>
+      <li><b>Indiquez le lundi</b>Tapez la date du lundi de la semaine : les sept dates et le numéro de semaine se remplissent tout seuls.</li>
+      <li><b>Saisissez les horaires</b>Une ligne par salarié, une heure de début et de fin par jour, ou « Repos ».</li>
+      <li><b>Imprimez et affichez</b>Le planning tient sur une page A4 paysage, avec un cadre pour les consignes et le visa du responsable.</li>
+    </ol>
+  </section>
+
+  <section class="cadre bloc" aria-labelledby="titre-contenu">
+    <h2 class="section-titre" id="titre-contenu">Ce que contient le modèle</h2>
+    <p class="intro">Un fichier simple, sans macro : il s'ouvre sans alerte de sécurité et se modifie librement.</p>
+    <div class="modules">
+      <div class="module"><b>15 salariés</b><span>Nom, poste et observations pour chacun</span></div>
+      <div class="module"><b>Lundi au dimanche</b><span>Début et fin pour chaque jour, week-end grisé</span></div>
+      <div class="module"><b>Dates automatiques</b><span>Dates des jours et numéro de semaine calculés</span></div>
+      <div class="module"><b>Prêt à afficher</b><span>Remarques, visa du responsable, date d'affichage</span></div>
+      <div class="module"><b>Mode d'emploi</b><span>Un onglet qui explique tout, pas à pas</span></div>
+      <div class="module"><b>Version papier</b><span>Le PDF vierge, à remplir au stylo</span></div>
+    </div>
+  </section>
+
+  <section class="cadre bloc" id="pro" aria-labelledby="titre-pro">
+    <div class="mesure">
+      <div>
+        <p class="surtitre">Bientôt disponible</p>
+        <h2 class="section-titre" id="titre-pro">Le planning Pro calcule les heures à votre place</h2>
+        <p>Pour préparer les éléments de paie sans calculatrice : la version Pro reprend ce planning et fait tous les comptes.</p>
+      </div>
+      <div>
+        <ul class="puces">
+          <li>Total d'heures par salarié, pauses déduites</li>
+          <li>Heures sup et complémentaires selon le contrat de chacun</li>
+          <li>Congés, RTT, maladie et absences</li>
+          <li>Jours fériés français automatiques, Alsace-Moselle comprise</li>
+          <li>Récapitulatifs mensuel et annuel</li>
+        </ul>
+        <p><a class="bouton" href="mailto:DH-Logiciels@outlook.fr?subject=Planning%20Pro%20-%20me%20pr%C3%A9venir%20de%20la%20sortie">Être prévenu de la sortie</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cadre bloc deux" aria-labelledby="titre-questions">
+    <h2 class="section-titre" id="titre-questions">Vos questions</h2>
+    <div>
+      <details>
+        <summary>Est-ce vraiment gratuit ?</summary>
+        <p>Oui. Le fichier se télécharge directement, sans inscription ni adresse e-mail. Vous pouvez l'utiliser dans votre entreprise ou votre association autant que vous voulez.</p>
+      </details>
+      <details>
+        <summary>Avec quels logiciels fonctionne-t-il ?</summary>
+        <p>Excel 2016 et les versions plus récentes, Microsoft 365, ainsi que LibreOffice Calc, gratuit. Le fichier ne contient aucune macro. Si vous n'avez aucun tableur, prenez la version PDF vierge et remplissez-la à la main.</p>
+      </details>
+      <details>
+        <summary>Comment préparer la semaine suivante ?</summary>
+        <p>Changez seulement la date du lundi : les dates se mettent à jour. Modifiez les horaires qui changent, puis imprimez. Pour garder un historique, enregistrez une copie du fichier par semaine.</p>
+      </details>
+      <details>
+        <summary>Puis-je le modifier ?</summary>
+        <p>Oui : couleurs, colonnes, nombre de lignes, tout est modifiable. Pour un outil adapté à votre organisation, DH Logiciels réalise aussi des <a href="../#sur-mesure">fichiers Excel sur mesure</a>.</p>
+      </details>
+      <details>
+        <summary>Le planning calcule-t-il les heures ?</summary>
+        <p>Non, ce modèle gratuit sert à organiser et afficher les horaires. Le calcul des heures, des heures supplémentaires et des absences sera dans la <a href="#pro">version Pro</a>.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="cadre">
+  <span>DH Logiciels · modèles Excel et logiciels pour les petites structures</span>
+  <span>David Hourt EI · SIREN 418 162 178 · 8 rue Mozart, 57310 Guénange · <a href="../#legal">Mentions légales</a></span>
+</footer>
+</body>
+</html>
