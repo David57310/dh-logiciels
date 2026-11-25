@@ -369,13 +369,13 @@
       <div>
         <h2 id="titre-contact">Une question ?</h2>
         <p>Je développe AssoGestion et je réponds moi-même à chaque message, pour l'installation, l'achat ou vos idées d'amélioration.</p>
-        <p class="adresse" id="adresse">DH-Logiciels@outlook.fr</p>
+        <p class="adresse" id="adresse">contact@dh-logiciels.com</p>
         <p class="copie" id="message-copie" role="status"></p>
         <p class="aide-install"><strong>À l'installation :</strong> si Windows affiche « Windows a protégé votre ordinateur », cliquez sur <em>Informations complémentaires</em>, puis sur <em>Exécuter quand même</em>. Ce message apparaît pour les logiciels récents de petits éditeurs ; AssoGestion ne contient ni publicité ni pisteur.</p>
       </div>
       <div class="liens">
         <a class="bouton jaune" href="https://github.com/David57310/AssoGestion/releases/download/v1.1/Installer-AssoGestion-V1.1.exe">Télécharger AssoGestion</a>
-        <a class="bouton" href="mailto:DH-Logiciels@outlook.fr?subject=AssoGestion">Écrire un e-mail</a>
+        <a class="bouton" href="mailto:contact@dh-logiciels.com?subject=AssoGestion">Écrire un e-mail</a>
         <button class="bouton" type="button" id="copier">Copier l'adresse</button>
       </div>
     </div>
@@ -420,12 +420,12 @@
       lien.remove();
       etatAchat.textContent = "La page de paiement s'ouvre dans un nouvel onglet.";
     } else {
-      etatAchat.textContent = "Le paiement en ligne arrive très bientôt. En attendant, écrivez à DH-Logiciels@outlook.fr pour commander.";
+      etatAchat.textContent = "Le paiement en ligne arrive très bientôt. En attendant, écrivez à contact@dh-logiciels.com pour commander.";
     }
   });
 
   // ---- Commande par virement ou chèque : même format d'e-mail que le logiciel (lu par AssoGestion Admin) ----
-  const EMAIL = "DH-Logiciels@outlook.fr";
+  const EMAIL = "contact@dh-logiciels.com";
   const zoneCommande = document.getElementById("commande");
   const boutonVirement = document.getElementById("bouton-virement");
   const msgCommande = document.getElementById("c-message");
@@ -500,7 +500,7 @@
   document.getElementById("copier").addEventListener("click", async () => {
     const zone = document.getElementById("message-copie");
     try {
-      await navigator.clipboard.writeText("DH-Logiciels@outlook.fr");
+      await navigator.clipboard.writeText("contact@dh-logiciels.com");
       zone.textContent = "Adresse copiée.";
     } catch (e) {
       zone.textContent = "Copie impossible ici : sélectionnez l'adresse ci-dessus.";

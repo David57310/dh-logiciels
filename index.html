@@ -31,7 +31,7 @@
    "name": "DH Logiciels",
    "url": "https://dh-logiciels.com/",
    "logo": "https://dh-logiciels.com/img/icone-512.png",
-   "email": "DH-Logiciels@outlook.fr",
+   "email": "contact@dh-logiciels.com",
    "founder": {
     "@type": "Person",
     "name": "David Hourt"
@@ -146,8 +146,34 @@
           <li>Transformation d'un fichier Excel en vraie application</li>
           <li>Devis gratuit, par e-mail</li>
         </ul>
-        <p><a class="bouton" href="mailto:DH-Logiciels@outlook.fr?subject=Demande%20de%20devis">Demander un devis</a></p>
+        <p><a class="bouton" href="mailto:contact@dh-logiciels.com?subject=Demande%20de%20devis">Demander un devis</a></p>
       </div>
+    </div>
+  </section>
+
+  <section class="cadre bloc deux" aria-labelledby="titre-questions">
+    <h2 class="section-titre" id="titre-questions">Vos questions</h2>
+    <div>
+      <details>
+        <summary>Pouvez-vous créer un fichier Excel sur mesure pour mon entreprise ou mon association ?</summary>
+        <p>Oui. Décrivez-moi votre besoin par e-mail (ce que vous faites aujourd'hui, ce qui vous prend du temps) : je vous propose une solution et un devis gratuit. Je crée des tableaux Excel avec formules, listes déroulantes, mises en forme automatiques, tableaux de bord et impressions prêtes à l'emploi.</p>
+      </details>
+      <details>
+        <summary>Pouvez-vous automatiser un fichier Excel avec des macros VBA ?</summary>
+        <p>Oui : boutons qui remplissent ou trient les données, import et export de fichiers, création automatique de documents ou de factures, envoi d'e-mails… Une tâche répétitive de plusieurs heures peut souvent se faire en un clic.</p>
+      </details>
+      <details>
+        <summary>Mon fichier Excel devient trop lourd : peut-on en faire un vrai logiciel ?</summary>
+        <p>Oui. Quand un fichier Excel est partagé entre plusieurs personnes, devient lent ou fragile, je peux le transformer en petit logiciel Windows simple à utiliser, avec vos données conservées sur votre ordinateur. C'est ainsi qu'est né AssoGestion.</p>
+      </details>
+      <details>
+        <summary>Travaillez-vous à distance ? Où êtes-vous situé ?</summary>
+        <p>DH Logiciels est installé à Guénange, en Moselle, près de Thionville et de Metz. Je travaille à distance partout en France, par e-mail et par téléphone.</p>
+      </details>
+      <details>
+        <summary>Combien coûte un développement sur mesure ?</summary>
+        <p>Cela dépend du besoin : un simple modèle Excel coûte beaucoup moins cher qu'un logiciel complet. Le devis est gratuit et sans engagement, et le prix est fixé avant de commencer. Micro-entreprise : TVA non applicable, art. 293 B du CGI.</p>
+      </details>
     </div>
   </section>
 
@@ -156,11 +182,11 @@
       <div>
         <h2 id="titre-contact">Une question, un projet ?</h2>
         <p>Je développe moi-même chaque outil et je réponds à chaque message : installation, achat, devis ou idée d'amélioration.</p>
-        <p class="adresse" id="adresse">DH-Logiciels@outlook.fr</p>
+        <p class="adresse" id="adresse">contact@dh-logiciels.com</p>
         <p class="copie" id="message-copie" role="status"></p>
       </div>
       <div class="liens">
-        <a class="bouton jaune" href="mailto:DH-Logiciels@outlook.fr">Écrire un e-mail</a>
+        <a class="bouton jaune" href="mailto:contact@dh-logiciels.com">Écrire un e-mail</a>
         <button class="bouton" type="button" id="copier">Copier l'adresse</button>
       </div>
     </div>
@@ -186,7 +212,7 @@
   }
   document.getElementById("copier").addEventListener("click", async () => {
     const zone = document.getElementById("message-copie");
-    try { await navigator.clipboard.writeText("DH-Logiciels@outlook.fr"); zone.textContent = "Adresse copiée."; }
+    try { await navigator.clipboard.writeText("contact@dh-logiciels.com"); zone.textContent = "Adresse copiée."; }
     catch (e) { zone.textContent = "Copie impossible ici : sélectionnez l'adresse ci-dessus."; }
   });
 }
